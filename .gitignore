@@ -1,0 +1,6 @@
+# ignore executables
+*.exe
+*.out
+*.bin
+
+*.prob
