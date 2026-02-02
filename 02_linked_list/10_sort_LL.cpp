@@ -19,26 +19,17 @@ class Node {
 };
 
 Node* middle(Node* head) {
-    if(head == NULL || head->next == NULL) return head;
+    if(head == NULL) return head;
     
-    Node* temp = head;
-    int ct = 0;
-    while(temp) {
-        ct++;
-        temp = temp->next;
+    Node* slow = head;
+    Node* fast = head->next;
+
+    while(fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
     }
 
-    int mid_ct = ct / 2;
-    ct = 0;
-    temp = NULL;
-
-    while(ct != mid_ct) {
-        if(temp == NULL) temp = head;
-        else temp = temp->next;
-        ct++;
-    }
-
-    return temp;
+    return slow;
 }
 
 Node* merge(Node* left, Node* right) {
