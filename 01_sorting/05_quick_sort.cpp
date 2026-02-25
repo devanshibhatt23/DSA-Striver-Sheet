@@ -1,36 +1,43 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <stdio.h>
 
-int f(vector<int> &arr, int low, int high) {
-    int x=low;
-    int i = low, j = high;
-
-    while(i<j) {
-        while(arr[i] <= arr[x] && i<high) i++;
-        while(arr[j] > arr[x] && j>low) j--;
-        if(i<j) swap(arr[i], arr[j]);
-    }
-
-    swap(arr[x], arr[j]);
-    return j;
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-void quicksort(vector<int> &arr, int low, int high) {
-    if(low<high) {
-        int p = f(arr,low,high);
-        quicksort(arr,low,p-1);
-        quicksort(arr,p+1,high);
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];   // last element as pivot
+    int i = low - 1;
+
+    for(int j = low; j < high; j++) {
+        if(arr[j] < pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
     }
-} 
+
+    swap(&arr[i+1], &arr[high]);
+    return i+1;
+}
+
+void quickSort(int arr[], int low, int high) {
+    if(low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi-1);
+        quickSort(arr, pi+1, high);
+    }
+}
 
 int main() {
-    int n;
-    cin >> n;
-    vector<int> arr(n);
+    int arr[] = {10, 7, 8, 9, 1, 5};
+    int n = 6;
 
-    for(int i=0; i<n; i++) cin >> arr[i];
+    quickSort(arr, 0, n-1);
 
-    quicksort(arr, 0, n-1);
+    for(int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
 
-    for(int i=0; i<n; i++) cout << arr[i] << " ";
+    return 0;
 }
