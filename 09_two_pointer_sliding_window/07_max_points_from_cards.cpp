@@ -5,19 +5,23 @@ using namespace std;
 
 int maxScore(vector<int>& cardPoints, int k) {
     int n = cardPoints.size();
-    int total = 0, ans = 0;
-    int left = 0, right = n-k+1;
+    int left = 0, right = n-k-1;
+    int ans = INT_MAX, sum = 0;
 
-    for(int i=0; i<=n-k; i++) total += cardPoints[i];
+    for(int i=0; i<=right; i++) sum += cardPoints[i];
 
     while(right < n) {
-        ans = max(ans,total);
-        total -= cardPoints[left];
-        total += cardPoints[right];
+        ans = min(ans,sum);
+        if(left != n) sum -= cardPoints[left];
         left++, right++;
+
+        if(right != n) sum += cardPoints[right];
     }
 
-    return ans;
+    sum = 0;
+    for(int &i : cardPoints) sum += i;
+
+    return sum - ans;
 }
 
 int main() {
