@@ -15,7 +15,6 @@ vector<vector<int>> adjacency_list(int n, int m) {
         cin >> x >> y;
 
         arr[x].push_back(y);
-        arr[y].push_back(x);
     }
 
     return arr;
@@ -32,7 +31,7 @@ void dfs(int start, vector<vector<int>> &adj_list, vector<int> &visited, stack<i
 }
 
 vector<int> topologicalSort(vector<vector<int>> &adj_list) {
-    int n = adj_list.size();
+    int n = adj_list.size()-1;
 
     vector<int> visited(n+1,0);
     vector<int> sorted;
