@@ -9,7 +9,7 @@ bool dfs(int st, vector<vector<int>> &adj_list, vector<int> &visited, vector<int
     check[st] = 0;
 
     for(int node : adj_list[st]) {
-        if(!visited[st] && dfs(node,adj_list,visited,path_visited,check)) {
+        if(!visited[node] && dfs(node,adj_list,visited,path_visited,check)) {
             return true;
         }
         else if(path_visited[node]) return true;
@@ -34,4 +34,6 @@ vector<int> safe_nodes(int start, vector<vector<int>> &adj_list, vector<int> &vi
     for(int i=1; i<=n; i++) {
         if(check[i]) safenodes.push_back(i);
     }
+
+    return safenodes;
 }
