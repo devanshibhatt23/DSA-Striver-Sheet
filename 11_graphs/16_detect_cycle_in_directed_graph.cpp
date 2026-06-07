@@ -22,14 +22,8 @@ bool dfs(int st, vector<vector<int>> &adj_list, vector<int> &visited, vector<int
     path_visited[st] = 1;
 
     for(int node : adj_list[st]) {
-        if(!visited[st]) {
-            if(dfs(node,adj_list,visited,path_visited)) {
-                return true;
-            }
-        }
-        else {
-            if(path_visited[node]) return true;
-        }
+        if(!visited[st] && dfs(node,adj_list,visited,path_visited)) return true;
+        else if(path_visited[node]) return true;
     }
 
     path_visited[st] = 0;
