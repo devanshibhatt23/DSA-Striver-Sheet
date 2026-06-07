@@ -27,7 +27,7 @@ vector<int> safe_nodes(int start, vector<vector<int>> &adj_list, vector<int> &vi
 
     for(int i=1; i<=n; i++) {
         if(!visited[i]) {
-            dfs(start,adj_list,visited,path_visited,check);
+            dfs(i,adj_list,visited,path_visited,check);
         }
     }
 
