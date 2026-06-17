@@ -2,7 +2,7 @@
 #include <queue>
 using namespace std;
 
-int makeConnected(int n, vector<vector<int>> &connections) {
+vector<vector<string>> accountsMerge(vector<vector<string>> &accounts) {
     class DisjointSet {
         public:
         vector<int> rank,parent,size;
@@ -57,25 +57,49 @@ int makeConnected(int n, vector<vector<int>> &connections) {
             }
         }
     };
+     
+    int n = accounts.size();
 
     DisjointSet ds(n);
-    int extra_edges = 0;
-    int components = 0;
+    unordered_map<string,int> mp;
 
-    for(auto &it : connections) {
-        int u = it[0], v = it[1];
+    for(int i=0; i<n; i++) {
+        for(int j=1; j<accounts[i].size(); j++) {
+            string str = accounts[i][j];
+            if(mp.find(str) == mp.end()) {
+                mp[str] = i;
+            }
+            else {
+                int parent = mp[str];
+                ds.unionByRank(i,parent);
+            }
+        }
+    }
 
-        int ultparent_u = ds.findUltimateParent(u);
-        int ultparent_v = ds.findUltimateParent(v);
+    vector<vector<string>> merged_acc(n);
+    vector<vector<string>> ans;
 
-        if(ultparent_u == ultparent_v) extra_edges++;
-        else ds.unionByRank(u,v);
+    for(auto &it : mp) {
+        auto [mail,node] = it;
+
+        int parent = ds.findUltimateParent(node);
+        merged_acc[parent].push_back(mail);
     }
 
     for(int i=0; i<n; i++) {
-        if(ds.parent[i] == i) components++;
+        vector<string> vec = merged_acc[i];
+
+        if(!vec.empty()) {
+            sort(vec.begin(), vec.end());
+
+            vector<string> temp(0);
+            temp.push_back(accounts[i][0]);
+
+            for(auto &str : vec) temp.push_back(str);
+
+            ans.push_back(temp);
+        }
     }
 
-    if(extra_edges >= components-1) return components-1;
-    return -1;
+    return ans;
 }

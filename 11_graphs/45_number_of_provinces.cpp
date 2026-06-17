@@ -9,7 +9,7 @@ int findCircleNum(vector<vector<int>> &isConnected) {
         DisjointSet(int n) {
             rank.resize(n+1,0);
             size.resize(n+1,1);
-            parent.reserve(n+1);
+            parent.resize(n+1);
 
             for(int i=0; i<=n; i++) {
                 parent[i] = i; 
