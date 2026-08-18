@@ -6,3 +6,5 @@
 *.prob
 
 *.vscode
+
+.DS_Store
